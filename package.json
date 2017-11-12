@@ -1,0 +1,12 @@
+{
+  "name": "smo-speedrun-alexa-skill",
+  "version": "1.0.0",
+  "description": "An alexa skill to get the top Any% for Super Mario Odyssey using the speedrun.com API",
+  "main": "index.js",
+  "dependencies": {
+    "alexa-sdk": "^1.0.19",
+    "node-fetch": "^1.7.3"
+  },
+  "author": "Benjamin Lannon",
+  "license": "MIT"
+}
