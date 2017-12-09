@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "alexa-sdk": "^1.0.19",
+    "moment": "^2.19.3",
     "node-fetch": "^1.7.3"
   },
   "author": "Benjamin Lannon",
