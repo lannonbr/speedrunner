@@ -1,0 +1,43 @@
+{
+  "languageModel": {
+    "invocationName": "speedrunner",
+    "intents": [
+      {
+        "name": "AMAZON.HelpIntent",
+        "slots": [],
+        "samples": []
+      },
+      {
+        "name": "AMAZON.YesIntent",
+        "slots": [],
+        "samples": []
+      },
+      {
+        "name": "AMAZON.NoIntent",
+        "slots": [],
+        "samples": []
+      },
+      {
+        "name": "GameSearchIntent",
+        "slots": [
+          {
+            "name": "Game",
+            "type": "AMAZON.SearchQuery"
+          }
+        ],
+        "samples": ["search for {Game}"]
+      },
+      {
+        "name": "CategoryIntent",
+        "slots": [
+          {
+            "name": "category",
+            "type": "AMAZON.NUMBER"
+          }
+        ],
+        "samples": ["Category {category}"]
+      }
+    ],
+    "types": []
+  }
+}

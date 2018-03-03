@@ -4,7 +4,7 @@
   "description": "An alexa skill to get the top Any% for Super Mario Odyssey using the speedrun.com API",
   "main": "index.js",
   "dependencies": {
-    "alexa-sdk": "^1.0.19",
+    "alexa-sdk": "^1.0.25",
     "moment": "^2.19.3",
     "node-fetch": "^1.7.3"
   },
