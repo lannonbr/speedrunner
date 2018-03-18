@@ -84,14 +84,21 @@ function times(seconds) {
   let minutes = Math.floor((secondsRounded - hours * 3600) / 60);
   let secondsLeft = secondsRounded - hours * 3600 - minutes * 60;
 
+  let hoursWording = hours == 1 ? "hour" : "hours";
+  let minutesWording = minutes == 1 ? "minute" : "minutes";
+  let secondsWording = seconds == 1 ? "second" : "seconds";
+
   if (hours == 0) {
-    let retStr = `${minutes} minutes, and ${secondsLeft} seconds`;
+    // Ex: 1 minute, and 20 seconds
+    let retStr = `${minutes} ${minutesWording}, and ${secondsLeft} ${secondsWording}`;
     return retStr;
   } else if (hours == 0 && minutes == 0) {
-    let retStr = `${secondsLeft} seconds`;
+    // Ex: 30 seconds
+    let retStr = `${secondsLeft} ${secondsWording}`;
     return retStr;
   } else {
-    let retStr = `${hours} hours, ${minutes} minutes, and ${secondsLeft} seconds`;
+    // Ex: 2 hours, 40 minutes, and 30 seconds
+    let retStr = `${hours} ${hoursWording}, ${minutes} ${minutesWording}, and ${secondsLeft} ${secondsWording}`;
     return retStr;
   }
 }
