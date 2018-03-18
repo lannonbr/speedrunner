@@ -1,12 +1,18 @@
 {
   "name": "smo-speedrun-alexa-skill",
   "version": "1.0.0",
-  "description": "An alexa skill to get the top Any% for Super Mario Odyssey using the speedrun.com API",
+  "description":
+    "An alexa skill to get the top Any% for Super Mario Odyssey using the speedrun.com API",
   "main": "index.js",
   "dependencies": {
     "alexa-sdk": "^1.0.25",
     "moment": "^2.19.3",
     "node-fetch": "^1.7.3"
+  },
+  "scripts": {
+    "clean": "rm speedrunner.zip",
+    "deploy":
+      "zip -r speedrunner.zip * && aws lambda update-function-code --function-name \"speedrunner\" --zip-file fileb://speedrunner.zip"
   },
   "author": "Benjamin Lannon",
   "license": "MIT"
