@@ -56,6 +56,71 @@ var handlers = {
       );
     });
   },
+  CategorySearchIntent: function() {
+    let CategoryName = this.event.request.intent.slots.CategoryName.value;
+    const Game = this.event.request.intent.slots.Game.value;
+
+    if (CategoryName == "any percent") {
+      CategoryName = "Any%";
+    } else if (
+      CategoryName == "one hundred percent" ||
+      CategoryName == "a hundred percent"
+    ) {
+      CategoryName = "100%";
+    }
+
+    getGameData(Game).then(gameData => {
+      fetch(gameData.links[3].uri)
+        .then(resp => resp.json())
+        .then(({ data }) => {
+          let idx;
+          let found = false;
+
+          for (idx = 0; idx < data.length; idx++) {
+            if (data[idx].name === CategoryName) {
+              found = true;
+              break;
+            }
+          }
+
+          if (found) {
+            fetch(data[idx].links[3].uri)
+              .then(resp => resp.json())
+              .then(json => {
+                return json.data[0].runs.slice(0, 3).reverse();
+              })
+              .then(runs => {
+                Promise.all([
+                  getUser(runs[0]),
+                  getUser(runs[1]),
+                  getUser(runs[2])
+                ]).then(users => {
+                  console.log(users);
+                  let run3Time = times(
+                    parseInt(runs[0].run.times["primary_t"])
+                  );
+                  let run2Time = times(
+                    parseInt(runs[1].run.times["primary_t"])
+                  );
+                  let run1Time = times(
+                    parseInt(runs[2].run.times["primary_t"])
+                  );
+                  let speechOutput = "Here are the top 3 runs. ";
+                  speechOutput += `In 3rd place: ${run3Time} by ${users[0]}. `;
+                  speechOutput += `In 2nd place: ${run2Time} by ${users[1]}. `;
+                  speechOutput += `And in 1st place: ${run1Time} by ${
+                    users[2]
+                  }. `;
+                  speechOutput += `Thank you for using Speedrunner`;
+                  this.emit(":tell", speechOutput);
+                });
+              });
+          } else {
+            this.emit(":tell", "I couldn't find that category");
+          }
+        });
+    });
+  },
   SessionEndedRequest: function() {
     this.emit(":tell", "Thanks for using speedrunner");
   },
