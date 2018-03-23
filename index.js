@@ -17,6 +17,7 @@ var handlers = {
     let game = this.event.request.intent.slots.Game.value;
     getGameData(game).then(data => {
       state["game"] = data.id;
+      state["GameName"] = data.names.international;
       let gameName = data.names.international;
       this.emit(
         ":ask",
@@ -37,16 +38,21 @@ var handlers = {
       this.emit(":ask", speechOutput);
     });
   },
+  "AMAZON.NoIntent": function() {
+    this.emit(":tell", "Okay. Thanks for using speedrunner");
+  },
   CategoryIntent: function() {
     let category = parseInt(this.event.request.intent.slots.category.value) - 1;
+    state["CategoryName"] = state["categories"][category].name;
     getRecords(category).then(runs => {
       Promise.all([getUser(runs[0]), getUser(runs[1]), getUser(runs[2])]).then(
         users => {
-          console.log(users);
           let run3Time = times(parseInt(runs[0].run.times["primary_t"]));
           let run2Time = times(parseInt(runs[1].run.times["primary_t"]));
           let run1Time = times(parseInt(runs[2].run.times["primary_t"]));
-          let speechOutput = "Here are the top 3 runs. ";
+          let speechOutput = `Here are the top 3 runs of the ${
+            state["CategoryName"]
+          } category of ${state["GameName"]}. `;
           speechOutput += `In 3rd place: ${run3Time} by ${users[0]}. `;
           speechOutput += `In 2nd place: ${run2Time} by ${users[1]}. `;
           speechOutput += `And in 1st place: ${run1Time} by ${users[2]}. `;
@@ -69,7 +75,15 @@ var handlers = {
       CategoryName = "100%";
     }
 
+    console.log("Debug Log");
+    console.log(Game);
+    console.log(CategoryName);
+    console.log("-------------------");
+
     getGameData(Game).then(gameData => {
+      state["game"] = gameData.id;
+      state["GameName"] = Game;
+      state["CategoryName"] = CategoryName;
       fetch(gameData.links[3].uri)
         .then(resp => resp.json())
         .then(({ data }) => {
@@ -105,7 +119,9 @@ var handlers = {
                   let run1Time = times(
                     parseInt(runs[2].run.times["primary_t"])
                   );
-                  let speechOutput = "Here are the top 3 runs. ";
+                  let speechOutput = `Here are the top 3 runs of the ${
+                    state["CategoryName"]
+                  } category of ${state["GameName"]}. `;
                   speechOutput += `In 3rd place: ${run3Time} by ${users[0]}. `;
                   speechOutput += `In 2nd place: ${run2Time} by ${users[1]}. `;
                   speechOutput += `And in 1st place: ${run1Time} by ${
@@ -116,7 +132,10 @@ var handlers = {
                 });
               });
           } else {
-            this.emit(":tell", "I couldn't find that category");
+            this.emit(
+              ":ask",
+              "I couldn't find that category. would you like for me to list the categories?"
+            );
           }
         });
     });

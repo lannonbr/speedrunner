@@ -1,43 +1,80 @@
 {
-  "languageModel": {
-    "invocationName": "speedrunner",
-    "intents": [
-      {
-        "name": "AMAZON.HelpIntent",
-        "slots": [],
-        "samples": []
-      },
-      {
-        "name": "AMAZON.YesIntent",
-        "slots": [],
-        "samples": []
-      },
-      {
-        "name": "AMAZON.NoIntent",
-        "slots": [],
-        "samples": []
-      },
-      {
-        "name": "GameSearchIntent",
-        "slots": [
-          {
-            "name": "Game",
-            "type": "AMAZON.SearchQuery"
-          }
-        ],
-        "samples": ["search for {Game}"]
-      },
-      {
-        "name": "CategoryIntent",
-        "slots": [
-          {
-            "name": "category",
-            "type": "AMAZON.NUMBER"
-          }
-        ],
-        "samples": ["Category {category}"]
-      }
-    ],
-    "types": []
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "speedrunner",
+      "intents": [
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.YesIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": []
+        },
+        {
+          "name": "GameSearchIntent",
+          "slots": [
+            {
+              "name": "Game",
+              "type": "AMAZON.Game"
+            }
+          ],
+          "samples": ["search for {Game}"]
+        },
+        {
+          "name": "CategoryIntent",
+          "slots": [
+            {
+              "name": "category",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": ["Category {category}"]
+        },
+        {
+          "name": "CategorySearchIntent",
+          "slots": [
+            {
+              "name": "CategoryName",
+              "type": "SpecificCategory"
+            },
+            {
+              "name": "Game",
+              "type": "AMAZON.Game"
+            }
+          ],
+          "samples": [
+            "{CategoryName} runs of {Game}",
+            "{CategoryName} runs for {Game}"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "SpecificCategory",
+          "values": [
+            {
+              "name": {
+                "value": "Glitchless"
+              }
+            },
+            {
+              "name": {
+                "value": "Any%"
+              }
+            },
+            {
+              "name": {
+                "value": "100%"
+              }
+            }
+          ]
+        }
+      ]
+    }
   }
 }
