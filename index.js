@@ -10,7 +10,7 @@ var handlers = {
   LaunchRequest: function() {
     this.emit(
       ":ask",
-      "Welcome to Speedrunner. you can look at speedrun records for a variety of games. What game would you like to search?"
+      "Welcome to Speedrunner. you can look at speedrun records for a variety of games. What game would you like to search? For more information, say Help"
     );
   },
   GameSearchIntent: function() {
@@ -34,7 +34,8 @@ var handlers = {
         let i = parseInt(idx) + 1;
         speechOutput += `${i}: ${categoryName}.<break time="0.4s"/> `;
       }
-      speechOutput += "Which category would you like?";
+      speechOutput +=
+        'Which category would you like? Respond with a saying like<break time="0.2s" />Category 2';
       this.emit(":ask", speechOutput);
     });
   },
@@ -139,6 +140,21 @@ var handlers = {
           }
         });
     });
+  },
+  "AMAZON.HelpIntent": function() {
+    this.emit(
+      ":ask",
+      `Speed Runner is a skill to get information on video game records from the speedrun.com API.
+      You can ask for games with commands like "Search for Super Mario Odyssey" or listen to specific
+      category records like "Look at one hundred percent runs of Super Mario Odyssey". What would you
+      like to do?`
+    );
+  },
+  "AMAZON.CancelIntent": function() {
+    this.emit(":tell", "Okay. Thanks for using speedrunner");
+  },
+  "AMAZON.StopIntent": function() {
+    this.emit(":tell", "Okay. Thanks for using speedrunner");
   },
   SessionEndedRequest: function() {
     this.emit(":tell", "Thanks for using speedrunner");
