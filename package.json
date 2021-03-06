@@ -1,18 +1,16 @@
 {
   "name": "speedrunner-alexa-skill",
   "version": "1.0.0",
-  "description":
-    "An alexa skill to get speedrun records using the speedrun.com API",
+  "description": "An alexa skill to get speedrun records using the speedrun.com API",
   "main": "index.js",
   "dependencies": {
     "alexa-sdk": "^1.0.25",
-    "moment": "^2.19.3",
-    "node-fetch": "^2.0.0"
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6.1"
   },
   "scripts": {
     "clean": "rm speedrunner.zip",
-    "deploy":
-      "zip -r speedrunner.zip * && aws lambda update-function-code --function-name \"speedrunner\" --zip-file fileb://speedrunner.zip"
+    "deploy": "zip -r speedrunner.zip * && aws lambda update-function-code --function-name \"speedrunner\" --zip-file fileb://speedrunner.zip"
   },
   "author": "Benjamin Lannon",
   "license": "MIT"
