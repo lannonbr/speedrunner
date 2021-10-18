@@ -6,7 +6,7 @@
   "dependencies": {
     "alexa-sdk": "^1.0.25",
     "moment": "^2.29.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^3.0.0"
   },
   "scripts": {
     "clean": "rm speedrunner.zip",
